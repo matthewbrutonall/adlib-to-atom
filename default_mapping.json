@@ -1,0 +1,50 @@
+{
+    "legacyId": {
+        "source_tags": ["priref", "object_number"],
+        "fallback": ""
+    },
+    "parentId": {
+        "source_tags": ["part_of", "part_of_reference"],
+        "fallback": ""
+    },
+    "identifier": {
+        "source_tags": ["object_number", "priref"],
+        "fallback": "UNKNOWN"
+    },
+    "title": {
+        "source_tags": ["title", "object_name"],
+        "fallback": "[Untitled]"
+    },
+    "levelOfDescription": {
+        "source_tags": [],
+        "fallback": "Item"
+    },
+    "scopeAndContent": {
+        "source_tags": ["description", "content.description"],
+        "fallback": ""
+    },
+    "extentAndMedium": {
+        "source_tags": ["dimension.value", "material"],
+        "join": true,
+        "join_char": "|",
+        "fallback": ""
+    },
+    "eventActors": {
+        "source_tags": ["creator", "maker"],
+        "join": true,
+        "join_char": "|",
+        "fallback": ""
+    },
+    "eventTypes": {
+        "source_tags": [],
+        "fallback": "Creation"
+    },
+    "eventStartDates": {
+        "source_tags": ["production.date.start"],
+        "fallback": ""
+    },
+    "eventEndDates": {
+        "source_tags": ["production.date.end"],
+        "fallback": ""
+    }
+}
