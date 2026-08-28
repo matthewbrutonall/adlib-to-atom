@@ -9,3 +9,8 @@ env/
 .DS_Store
 !tests/*.xml
 !tests/*.csv
+
+# Build artifacts
+*.egg-info/
+build/
+dist/

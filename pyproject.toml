@@ -6,8 +6,19 @@ build-backend = "setuptools.build_meta"
 name = "adlib-to-atom"
 version = "0.1.0"
 description = "Axiell Adlib XML to AtoM ISAD(G) CSV converter"
+readme = "README.md"
 requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Archive Hosting UK", email = "hello@archiveshosting.co.uk"}
+]
 dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/matthewbrutonall/adlib-to-atom"
+
+[project.scripts]
+adlib-to-atom = "cli:main"
 
 [project.optional-dependencies]
 dev = [
@@ -15,4 +26,4 @@ dev = [
 ]
 
 [tool.setuptools]
-py_modules = ["adlib_core", "cli"]
+py-modules = ["adlib_core", "cli"]

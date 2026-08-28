@@ -13,7 +13,7 @@ A standalone, memory-safe XML parser that converts Axiell Adlib (and Axiell Coll
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/adlib-to-atom.git
+git clone https://github.com/matthewbrutonall/adlib-to-atom.git
 cd adlib-to-atom
 
 # Create a virtual environment
@@ -40,3 +40,6 @@ Run the test suite using pytest:
 ```bash
 pytest tests/
 ```
+
+## License
+Released under the [MIT License](LICENSE).
