@@ -4,6 +4,14 @@
 
 A standalone, memory-safe XML parser that converts Axiell Adlib (and Axiell Collections) XML exports into Artefactual's AtoM ISAD(G) CSV format.
 
+## Install with your AI agent
+
+Copy and paste this into your agent:
+
+```text
+Install the Adlib to AtoM converter from https://github.com/matthewbrutonall/adlib-to-atom on my computer. Check that Python 3.8 or later is available, create a virtual environment, install the normal command-line package from the repository, and verify that `adlib-to-atom --help` works. Tell me how to run it. Do not process any collection data yet.
+```
+
 ## Features
 *   **Memory-Safe XML Streaming:** Uses `xml.etree.ElementTree.iterparse()` and element-clearing to process gigabyte-sized museum exports without exhausting RAM.
 *   **Grouped XML Support:** Recursively traverses Adlib's grouped XML wrappers (e.g., `<production>`, `<dimension>`) to locate nested data.
