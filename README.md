@@ -2,54 +2,64 @@
 
 ![Museum object metadata becoming an archival import table](assets/adlib-to-atom.png)
 
-A standalone, memory-safe XML parser that converts Axiell Adlib (and Axiell Collections) XML exports into Artefactual's AtoM ISAD(G) CSV format.
+If your archive has catalogue records in Axiell Adlib and wants to move them to AtoM (Access to Memory), the records need to be rearranged for the new system. This tool helps with that step.
 
-## Install with your AI agent
+It reads an **XML export** from Adlib, which is a copy of the catalogue data, and creates a **CSV file** for review before an AtoM import. A CSV is a table you can open in spreadsheet software. The tool works with exported files; it does not connect to either live catalogue.
 
-Copy and paste this into your agent:
+For example, imagine an Adlib record for a *Parish minute book* with the reference `PAR/42`, creator *Parish Office*, and date `1901`. The converter puts those details into the corresponding columns of one AtoM-style CSV row. An archivist can then check the row before importing it.
+
+## Who might use it?
+
+An archivist, museum worker, or migration consultant preparing to move catalogue data from Adlib or Axiell Collections into AtoM. You need an Adlib XML export and the exact name of the destination repository in AtoM.
+
+## What it does
+
+- Moves common details such as identifiers, titles, descriptions, creators, and dates into AtoM CSV columns.
+- Reads nested Adlib XML and selects the requested language when a field has several translations. For example, `--culture en` selects an English title when one is available.
+- Keeps multiple creator and date entries aligned in the CSV. If one entry has no corresponding value, it uses a `NULL` placeholder so the positions stay clear.
+- Processes records incrementally to reduce memory use with large exports.
+
+The included `default_mapping.json` defines which Adlib fields go into which AtoM columns. You can supply a different mapping file if your export uses other fields.
+
+## Before you import the CSV
+
+Check a sample of the output against the Adlib export, especially titles, identifiers, creators, dates, and the repository name. Missing titles may appear as `[Untitled]`; an identifier that cannot be found may appear as `UNKNOWN`. These are prompts for review, not completed descriptions.
+
+The converter creates a CSV; it does **not** import records into AtoM or check whether every field in your particular export has been mapped. Keep the original XML export. **Choose a new output filename:** the current command replaces an existing CSV at the output path.
+
+## Set it up with your AI agent
+
+Copy and paste this into an agent that can work on your computer:
 
 ```text
-Install the Adlib to AtoM converter from https://github.com/matthewbrutonall/adlib-to-atom on my computer. Check that Python 3.8 or later is available, create a virtual environment, install the normal command-line package from the repository, and verify that `adlib-to-atom --help` works. Tell me how to run it. Do not process any collection data yet.
+Set up the Adlib to AtoM Converter from https://github.com/matthewbrutonall/adlib-to-atom on my computer. Check that Python 3.8 or later is available, clone the repository into its own folder, and verify that `python3 cli.py --help` works from that folder. Show me the command I would use for an Adlib XML export, but do not process any collection data yet.
 ```
 
-## Features
-*   **Memory-Safe XML Streaming:** Uses `xml.etree.ElementTree.iterparse()` and element-clearing to process gigabyte-sized museum exports without exhausting RAM.
-*   **Grouped XML Support:** Recursively traverses Adlib's grouped XML wrappers (e.g., `<production>`, `<dimension>`) to locate nested data.
-*   **Culture-Aware Extraction:** Intelligently extracts the correct multilingual `<value lang="...">` tags from WebAPI exports.
-*   **Strict Parallel Arrays:** Perfectly pads missing actors or dates with `NULL` to satisfy AtoM's strict event array rules.
-*   **JSON Mapping:** Easily customizable Adlib tag-to-AtoM header mapping via `default_mapping.json`.
+## Run it yourself
 
-## Installation
+You need Python 3.8 or later. The normal conversion uses Python's standard library; no extra packages are needed when running the script from this repository.
 
 ```bash
-# Clone the repository
 git clone https://github.com/matthewbrutonall/adlib-to-atom.git
 cd adlib-to-atom
-
-# Create a virtual environment
-python3 -m venv venv
-source venv/bin/activate
-
-# Install development dependencies (pytest)
-pip install -e .[dev]
+python3 cli.py --help
 ```
 
-## Usage
+To convert an export, replace the example filenames and repository name with your own:
 
 ```bash
-python cli.py <input.xml> <output.csv> --repository <atom-repo-name>
+python3 cli.py adlib-export.xml atom-import.csv --repository "Example Archive"
 ```
 
-**Options:**
-*   `--repository` (Required): The authorized name of the repository in AtoM (prevents ghost records).
-*   `--culture` (Optional): The target culture code for multilingual selection (default: `en`).
-*   `--mapping` (Optional): Path to a custom JSON mapping profile.
+`--repository` is required. Use the exact repository name authorised in your AtoM system. The default language is English (`en`); use `--culture` for another language. Use `--mapping your-mapping.json` for a custom field mapping.
 
-## Testing
-Run the test suite using pytest:
+## For developers
+
+The converter uses Python's streaming XML parser and a JSON field map. To install the optional test dependency and run the tests:
+
 ```bash
+python3 -m pip install -e ".[dev]"
 pytest tests/
 ```
 
-## License
 Released under the [MIT License](LICENSE).
