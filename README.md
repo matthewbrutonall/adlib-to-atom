@@ -1,5 +1,7 @@
 # Adlib to AtoM Converter
 
+![Museum object metadata becoming an archival import table](assets/adlib-to-atom.png)
+
 A standalone, memory-safe XML parser that converts Axiell Adlib (and Axiell Collections) XML exports into Artefactual's AtoM ISAD(G) CSV format.
 
 ## Features
